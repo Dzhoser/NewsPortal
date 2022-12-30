@@ -1,0 +1,2 @@
+# NewsPortal
+News Portal project
