@@ -71,6 +71,9 @@ class Post(models.Model):
     def preview(self):
         return ' '.join((self.article_text[0:123], '...'))
 
+    def __str__(self):
+        return f'{self.author}: {self.article_text[0:123]}'
+
 
 
 class PostCategory(models.Model):
