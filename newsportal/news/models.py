@@ -59,6 +59,7 @@ class Post(models.Model):
     posttype = models.CharField(max_length=2, choices=POSTTYPES)
     date_in = models.DateTimeField(auto_now_add = True)
     postcat = models.ManyToManyField(Category, through = 'PostCategory')
+    heading = models.CharField(max_length=255)
     article_text = models.TextField()
     article_rating = models.FloatField(default=0.0)
 
