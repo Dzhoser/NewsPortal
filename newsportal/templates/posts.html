@@ -1,6 +1,6 @@
 <!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
 {% extends 'flatpages/default.html' %}
-
+{% load custom_filters %}
 <!-- Название у нас будет products -->
 {% block title %}
 Posts
@@ -24,7 +24,7 @@ Posts
                 чтобы ограничить количество символов до 15.
                 Все остальные символы превратятся в многоточие. -->
                <td>{{ post.date_in | date:'d M Y' }}</td>
-               <td>{{ post.article_text | truncatewords:20 }}</td>
+               <td>{{ post.article_text | truncatewords:20 | censor_text}}</td>
            </tr>
            {% endfor %}
 

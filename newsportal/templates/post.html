@@ -1,6 +1,6 @@
 <!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
 {% extends 'flatpages/default.html' %}
-
+{% load custom_filters %}
 <!-- Название у нас будет Post -->
 {% block title %}
 Post
@@ -10,5 +10,5 @@ Post
 {% block content %}
 <h1>{{ post.heading }}</h1>
 <p>Дата публикации {{ post.date_in | date:'d M Y' }}</p>
-<p>{{ post.article_text }}</p>
+<p>{{ post.article_text | censor_text }}</p>
 {% endblock content %}
