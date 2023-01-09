@@ -11,6 +11,11 @@ Posts
 <h1>Все новости, Количество новостей {{ posts | length }}</h1>
 <!-- {{ posts }}-->
 
+<form action="" method="get">
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+</form>
+
     <table>
            <tr>
                <td width="200">Заголовок</td>
