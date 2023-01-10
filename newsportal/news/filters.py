@@ -1,27 +1,30 @@
-from django_filters import FilterSet, ModelChoiceFilter
+from django_filters import FilterSet, DateTimeFilter
+from django.forms import DateTimeInput
 from .models import Post, Category
 
-# Создаем свой набор фильтров для модели Product.
+# Создаем свой набор фильтров для модели Post
 # FilterSet, который мы наследуем,
 # должен чем-то напомнить знакомые вам Django дженерики.
 class PostFilter(FilterSet):
-    # category = ModelChoiceFilter(
-    #     field_name = 'Категория',
-    #     queryset = Category.category
-    #     )
+    added_after = DateTimeFilter(
+                                field_name='date_in',
+                                lookup_expr='gt',
+                                widget=DateTimeInput(
+                                                    format='%Y-%m-%dT%H:%M',
+                                                    attrs={'type': 'datetime-local'},
+                                                    ),
+                                )
 
-
-
-   class Meta:
+    class Meta:
        # В Meta классе мы должны указать Django модель,
        # в которой будем фильтровать записи.
-       model = Post
+        model = Post
        # В fields мы описываем по каким полям модели
        # будет производиться фильтрация.
-       fields = {
+        fields = {
            # поиск по названию
-           'heading': ['icontains'],
+            'heading': ['icontains'],
            # количество товаров должно быть больше или равно
-           'date_in': ['gt'],
-           'postcat__category': ['exact']
-       }
+           #  'date_in': ['gt'],
+            'postcat__category': ['exact']
+        }
