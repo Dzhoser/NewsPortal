@@ -2,9 +2,10 @@
 
 # Create your views here.
 
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Post
 from .filters import PostFilter
+from .forms import PostFormNews
 
 class PostsList(ListView):
     # Указываем модель, объекты которой мы будем выводить
@@ -49,3 +50,18 @@ class PostsDetail(DetailView):
     template_name = 'post.html'
     # Название объекта, в котором будет выбранный пользователем продукт
     context_object_name = 'post'
+
+
+# Добавляем новое представление для создания товаров.
+class PostCreateNews(CreateView):
+    # Указываем нашу разработанную форму
+    form_class = PostFormNews
+    # модель товаров
+    model = Post
+    # и новый шаблон, в котором используется форма.
+    template_name = 'news_create.html'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.posttype = 'NW'
+        return super().form_valid(form)
