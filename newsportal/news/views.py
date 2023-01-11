@@ -1,8 +1,8 @@
 #from django.shortcuts import render
 
 # Create your views here.
-
-from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 from .filters import PostFilter
 from .forms import PostFormNews
@@ -65,3 +65,14 @@ class PostCreateNews(CreateView):
         post = form.save(commit=False)
         post.posttype = 'NW'
         return super().form_valid(form)
+
+# Добавляем представление для изменения товара.
+class PostUpdateNews(UpdateView):
+    form_class = PostFormNews
+    model = Post
+    template_name = 'news_create.html'
+
+class PostDeleteNews(DeleteView):
+    model = Post
+    template_name = 'news_delete.html'
+    success_url = reverse_lazy('post_list')
