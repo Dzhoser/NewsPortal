@@ -18,3 +18,4 @@ class PostFormNews(forms.ModelForm):
            'article_text',
            'article_rating'
        ]
+

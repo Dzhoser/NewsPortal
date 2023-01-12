@@ -52,7 +52,7 @@ class PostsDetail(DetailView):
     context_object_name = 'post'
 
 
-# Добавляем новое представление для создания товаров.
+# Добавляем новое представление для создания
 class PostCreateNews(CreateView):
     # Указываем нашу разработанную форму
     form_class = PostFormNews
@@ -72,7 +72,34 @@ class PostUpdateNews(UpdateView):
     model = Post
     template_name = 'news_create.html'
 
+
 class PostDeleteNews(DeleteView):
     model = Post
     template_name = 'news_delete.html'
+    success_url = reverse_lazy('post_list')
+
+
+class PostCreateArticles(CreateView):
+    # Указываем нашу разработанную форму
+    form_class = PostFormNews
+    # модель товаров
+    model = Post
+    # и новый шаблон, в котором используется форма.
+    template_name = 'art_create.html'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.posttype = 'AT'
+        return super().form_valid(form)
+
+
+class PostUpdateArticles(UpdateView):
+    form_class = PostFormNews
+    model = Post
+    template_name = 'art_create.html'
+
+
+class PostDeleteArticles(DeleteView):
+    model = Post
+    template_name = 'art_delete.html'
     success_url = reverse_lazy('post_list')
