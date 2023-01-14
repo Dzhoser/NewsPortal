@@ -1,6 +1,7 @@
 #from django.shortcuts import render
 
 # Create your views here.
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
@@ -53,7 +54,8 @@ class PostsDetail(DetailView):
 
 
 # Добавляем новое представление для создания
-class PostCreateNews(CreateView):
+class PostCreateNews(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
     # Указываем нашу разработанную форму
     form_class = PostFormNews
     # модель товаров
@@ -67,19 +69,22 @@ class PostCreateNews(CreateView):
         return super().form_valid(form)
 
 # Добавляем представление для изменения товара.
-class PostUpdateNews(UpdateView):
+class PostUpdateNews(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
     form_class = PostFormNews
     model = Post
     template_name = 'news_create.html'
 
 
-class PostDeleteNews(DeleteView):
+class PostDeleteNews(PermissionRequiredMixin, DeleteView):
+    permission_required = ('news.delete_post',)
     model = Post
     template_name = 'news_delete.html'
     success_url = reverse_lazy('post_list')
 
 
-class PostCreateArticles(CreateView):
+class PostCreateArticles(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
     # Указываем нашу разработанную форму
     form_class = PostFormNews
     # модель товаров
@@ -93,13 +98,15 @@ class PostCreateArticles(CreateView):
         return super().form_valid(form)
 
 
-class PostUpdateArticles(UpdateView):
+class PostUpdateArticles(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
     form_class = PostFormNews
     model = Post
     template_name = 'art_create.html'
 
 
-class PostDeleteArticles(DeleteView):
+class PostDeleteArticles(PermissionRequiredMixin, DeleteView):
+    permission_required = ('news.delete_post',)
     model = Post
     template_name = 'art_delete.html'
     success_url = reverse_lazy('post_list')
