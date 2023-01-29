@@ -1,15 +1,13 @@
-from django.urls import path
-# Импортируем созданное нами представление
-from .views import PostsList, PostsDetail, SearchList, PostCreateNews, PostUpdateNews, PostDeleteNews
-
+from django.urls import path  # path — означает путь
+from .views import PostList, PostDetail, CategoryDetail, PostSearch,  PostAdd, PostUpdate, PostDelete, SubscribeCategory
 
 urlpatterns = [
-   # path — означает путь.
-
-   path('', PostsList.as_view(), name = 'post_list'),
-   path('<int:pk>', PostsDetail.as_view(), name = 'post_detail'),
-   path('search', SearchList.as_view(), name = 'search_list'),
-   path('create', PostCreateNews.as_view(), name = 'post_create_news'),
-   path('<int:pk>/update/', PostUpdateNews.as_view(), name='post_update_news'),
-   path('<int:pk>/delete/', PostDeleteNews.as_view(), name='post_delete_news'),
+    path('', PostList.as_view(), name='main'),  # т.к. сам по себе это класс, нам надо представить этот класс в виде view
+    path('<int:pk>', PostDetail.as_view(), name='post_detail'),
+    path('category/<int:pk>/', CategoryDetail.as_view(), name='category'),
+    path('category/<int:pk>/subscribe', SubscribeCategory.as_view(), name='subscribe_category'),
+    path('search/', PostSearch.as_view()),
+    path('add/', PostAdd.as_view(), name='post_add'),
+    path('update/<int:pk>', PostUpdate.as_view(), name='post_update'),
+    path('delete/<int:pk>', PostDelete.as_view(), name='post_delete'),
 ]

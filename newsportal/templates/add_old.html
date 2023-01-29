@@ -1,0 +1,22 @@
+{% extends 'flatpages/default.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+Добавление и редактирование
+{% endblock title %}
+
+
+{% block header %}
+Добавление и редактирование
+{% endblock header %}
+
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }} <!-- Теперь нам нужна только готовая форма и кнопка -->
+    <input type="submit" value="Добавить новость">
+</form>
+{% endblock content %}

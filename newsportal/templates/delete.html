@@ -1,0 +1,41 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block header %}
+Удаление новости
+{% endblock header %}
+
+{% block content %}
+<form method="post">{% csrf_token %}
+    <p>Вы действительно собираетесь удалить эту новость?</p>
+    <input type="submit" value="Да">
+</form>
+
+<hr>
+    <table>
+        <tr>
+            <td>
+                <b> Заголовок </b>
+            </td>
+            <td width="200">
+                <b> Дата публикации </b>
+            </td>
+            <td>
+                <b> Превью </b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ post.title }}
+            </td>
+            <td>
+                {{ post.created_at|date:'M-d-Y h:i' }}
+            </td>
+            <td>
+                {{ post.text }}
+            </td>
+        </tr>
+    </table>
+
+
+{% endblock content %}

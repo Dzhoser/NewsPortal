@@ -1,63 +1,83 @@
-<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
 {% extends 'flatpages/default.html' %}
-{% load custom_filters %}
-<!-- Название у нас будет products -->
-{% load custom_tags %}
+{% load censor %}  <!-- Подгружаем фильтры -->
 
 {% block title %}
-Posts
+Поиск
 {% endblock title %}
 
-<!-- В контенте на странице мы выводим все товары -->
+{% block header %}
+Поиск
+{% endblock header %}
+
+
 {% block content %}
-<h1>Все новости, Количество новостей {{ posts | length }}</h1>
-<!-- {{ posts }}-->
 
-<form action="" method="get">
-       {{ filterset.form.as_p }}
-       <input type="submit" value="Найти" />
+<!-- Перед таблицей добавим форму для поиска -->
+<form method="GET">
+    {{ filter.form }} <!-- Форму создает Джанго, а кнопку необходимо добавить -->
+    <input type="submit" value="Найти">
 </form>
+<hr>
+    {% if posts %}
+        <table width="100%" align="right">
+        <style>
+        table {
+        margin: auto; /* Выравниваем таблицу по центру окна  */
+        }
+        td {
+        text-align: center; /* Выравниваем текст по центру ячейки */
+        }
+        </style>
+            <tr>
+                <td width=200>
+                    <b> Заголовок </b>
+                </td>
+                <td width=200>
+                    <b> Дата публикации </b>
+                </td>
+                <td>
+                    <b> Превью </b>
+                </td>
+            </tr>
+            {% for post in filter.qs %}
+            <tr>
+                <td>
+                    {{ post.title|title }}
+                </td>
+                <td>
+                    {{ post.created_at|date:'M d Y' }}
+                </td>
+                <td>
+                    {{post.text|censor|truncatewords:20}}
+                </td>
+            </tr>
 
-    <table>
-           <tr>
-               <td width="200">Заголовок</td>
-               <td width="100">Дата</td>
-               <td width="400">Краткое содержание</td>
-           </tr>
-        {% for post in posts %}
-           <tr>
-               <td><a href="{{ post.id }}">{{ post.heading }}</a></td>
-                <!-- Добавим специальный фильтр truncatechars,
-                чтобы ограничить количество символов до 15.
-                Все остальные символы превратятся в многоточие. -->
-               <td>{{ post.date_in | date:'d M Y' }}</td>
-               <td>{{ post.article_text | truncatewords:20 | censor_text}}</td>
-           </tr>
-           {% endfor %}
+            {% endfor %}
+        </table>
+    <hr>
+        <!-- Проверяем что поддерживается постраничный вывод -->
+        {% if is_paginated %}
+            <!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
+            {% if page_obj.has_previous %}
+                <a href="?page=1">First</a>
+                <a href="?page={{ page_obj.previous_page_number }}"><<<</a>
+            {% endif %}
 
-    </table>
+            <!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a>{{ num }}</a>
+                {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
 
-      {# Добавляем пагинацию на страницу #}
-   {# Информация о предыдущих страницах #}
-   {% if page_obj.has_previous %}
-       <a href="?{% url_replace page=1 %}">1</a>
-       {% if page_obj.previous_page_number != 1 %}
-           ...
-           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
-       {% endif %}
-   {% endif %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">>>></a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
 
-   {# Информация о текущей странице #}
-   {{ page_obj.number }}
-
-   {# Информация о следующих страницах #}
-   {% if page_obj.has_next %}
-       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
-       {% if paginator.num_pages != page_obj.next_page_number %}
-           ...
-           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
-       {% endif %}
-   {% endif %}
-
-
+        {% endif %}
+    {% endif %}
+    <hr>
 {% endblock content %}

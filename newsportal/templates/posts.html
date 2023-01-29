@@ -1,56 +1,97 @@
-<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
 {% extends 'flatpages/default.html' %}
-{% load custom_filters %}
-<!-- Название у нас будет products -->
+{% load censor %}  <!-- Подгружаем фильтры -->
+
+
 {% block title %}
-Posts
+Новости
 {% endblock title %}
 
-<!-- В контенте на странице мы выводим все товары -->
+{% block header %}
+Новости
+{% endblock header %}
+
 {% block content %}
-<h1>Все новости, Количество новостей {{ posts | length }}</h1>
-<!-- {{ posts }}-->
 
-    <table>
-           <tr>
-               <td width="200">Заголовок</td>
-               <td width="100">Дата</td>
-               <td width="400">Краткое содержание</td>
-           </tr>
-        {% for post in posts %}
-           <tr>
-               <td><a href="{{ post.id }}">{{ post.heading }}</a></td>
-                <!-- Добавим специальный фильтр truncatechars,
-                чтобы ограничить количество символов до 15.
-                Все остальные символы превратятся в многоточие. -->
-               <td>{{ post.date_in | date:'d M Y' }}</td>
-               <td>{{ post.article_text | truncatewords:20 | censor_text}}</td>
-           </tr>
-           {% endfor %}
+<hr>
+    {% if posts %}
+        <table width="100%" align="right">
+        <style>
+        table {
+        margin: auto; /* Выравниваем таблицу по центру окна  */
+        }
+        td {
+        text-align: center; /* Выравниваем текст по центру ячейки */
+        }
+        </style>
+            <tr>
+                <td width=200>
+                    <b> Заголовок </b>
+                </td>
+                <td width=200>
+                    <b> Дата публикации </b>
+                </td>
+                <td>
+                    <b> Превью </b>
+                </td>
+                <td>
+                    <b> Категория </b>
+                </td>
+            </tr>
+            {% for post in posts %}
+            <tr>
+                <td>
+                    <a href="{% url 'post_detail' post.id %}">{{ post.title|title }} </a>
+                    <style>
+                    a {
+                    color: Grey; /* Цвет ссылок */,
+                    padding: 2px; /* Поля вокруг текста ссылки */
+                    text-decoration: none; /* Убираем подчёркивание */
+                    }
+                    a:hover {
+                    color: Black; /* Новый цвет текста */
+                    }
+                    </style>
+                    <a href="{% url 'post_update' post.id %}"><u>Редактировать</u></a> <!-- добавим ссылку на редактирование-->
+                    <a href="{% url 'post_delete' post.id %}"><u>Удалить</u></a> <!-- добавим ссылку на удаление-->
+                </td>
+                <td>
+                    {{ post.created_at|date:'M d Y' }}
+                </td>
+                <td>
+                    {{post.text|censor|truncatewords:20}}
+                </td>
+                <td>
+                    {% for category in post.category.all %}
+                            <a href="{% url 'category' category.pk %}"> {{ category }} </a>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    <hr>
+        <!-- Проверяем что поддерживается постраничный вывод -->
+        {% if is_paginated %}
+            <!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
+            {% if page_obj.has_previous %}
+                <a href="?page=1">Первая</a>
+                <a href="?page={{ page_obj.previous_page_number }}"><<<</a>
+            {% endif %}
 
-    </table>
+            <!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a>{{ num }}</a>
+                {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
 
-   {# Добавляем пагинацию на страницу #}
-   {# Информация о предыдущих страницах #}
-   {% if page_obj.has_previous %}
-       <a href="?page=1">1</a>
-       {% if page_obj.previous_page_number != 1 %}
-           ...
-           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
-       {% endif %}
-   {% endif %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">>>></a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Последняя</a>
+            {% endif %}
 
-   {# Информация о текущей странице #}
-   {{ page_obj.number }}
-
-   {# Информация о следующих страницах #}
-   {% if page_obj.has_next %}
-       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
-       {% if paginator.num_pages != page_obj.next_page_number %}
-           ...
-           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
-       {% endif %}
-   {% endif %}
-
-
+        {% endif %}
+    {% endif %}
+    <hr>
 {% endblock content %}
