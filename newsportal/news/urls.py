@@ -1,5 +1,5 @@
 from django.urls import path  # path — означает путь
-from .views import PostList, PostDetail, CategoryDetail, PostSearch,  PostAdd, PostUpdate, PostDelete, SubscribeCategory
+from .views import PostList, PostDetail, CategoryDetail, PostSearch,  PostAdd, PostUpdate, PostDelete, SubscribeCategory, TestInfo
 
 urlpatterns = [
     path('', PostList.as_view(), name='main'),  # т.к. сам по себе это класс, нам надо представить этот класс в виде view

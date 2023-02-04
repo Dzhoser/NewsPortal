@@ -33,7 +33,7 @@ def notify_new_post(sender, action, instance, **kwargs):
     send_mail(
         subject='"' + subject + '"',
         message='В вашей любимой категории новая публикация:' + link + ' ' + instance.text,
-        from_email='merrimorlavrushina@yandex.ru',
+        from_email='example@yandex.ru',
         recipient_list=emails
     )
 
@@ -45,6 +45,6 @@ def notify_post_del(sender, instance, **kwargs):
     send_mail(
         subject=subject,
         message=instance.text,
-        from_email='merrimorlavrushina@yandex.ru',
-        recipient_list=['lavrushina.maria@mail.ru']
+        from_email='example@yandex.ru',
+        recipient_list=['example@yandex.ru']
     )

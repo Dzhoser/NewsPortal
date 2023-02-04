@@ -170,3 +170,9 @@ DEFAULT_FROM_EMAIL = "example@yandex.ru"
 
 # use this for signals
 SITE_URL = "http://127.0.0.1:8000"
+
+CELERY_BROKER_URL = 'redis://192.168.1.15:6379'
+CELERY_RESULT_BACKEND = 'redis://192.168.1.15:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

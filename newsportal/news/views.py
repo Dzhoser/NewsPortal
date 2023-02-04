@@ -6,6 +6,9 @@ from .filters import PostFilter  # импортируем фильтр
 from .forms import PostForm
 from django.views import View
 
+
+from datetime import datetime, timedelta
+
 '''Импортируем миксин, который проверяет аутентификацию и допускает на страницу только зарегистрированных пользователей.
  Его добавляем в наследуемые классы. Кроме миксина можно использовать декоратор login_required'''
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -109,10 +112,20 @@ class SubscribeCategory(UpdateView):   # представление для ре�
                 subject=f'{category.name}',
                 message=f'Категория на которую вы подписаны: {category.name}.  ',
                 from_email='merrimorlavrushina@yandex.ru',
-                # recipient_list=['lavrushina.maria@mail.ru'],
                 recipient_list=[email],
             )
         else:
             Category.objects.get(pk=self.kwargs.get('pk')).subscribers.remove(self.request.user)
 
         return redirect(request.META.get('HTTP_REFERER'))
+
+
+class TestInfo(TemplateView):
+    today = datetime.now()
+    last_week = today - timedelta(days=7)
+    # get all post for the last week
+    posts = Post.objects.filter(created_at__gte=last_week)
+    # get categories only once
+    categories = set(posts.values_list('postcategory__category', flat=True))
+    print(categories)
+
