@@ -8,6 +8,7 @@ from django.views import View
 
 
 from datetime import datetime, timedelta
+from django.contrib.auth.models import User
 
 '''Импортируем миксин, который проверяет аутентификацию и допускает на страницу только зарегистрированных пользователей.
  Его добавляем в наследуемые классы. Кроме миксина можно использовать декоратор login_required'''
@@ -35,6 +36,7 @@ class PostDetail(DetailView):  # редставление, в котором б�
     model = Post
     template_name = 'post.html'
     context_object_name = 'post'
+
 
 class PostSearch(ListView):
     model = Post  # указываем модель, объекты которой мы будем выводить
@@ -120,12 +122,5 @@ class SubscribeCategory(UpdateView):   # представление для ре�
         return redirect(request.META.get('HTTP_REFERER'))
 
 
-class TestInfo(TemplateView):
-    today = datetime.now()
-    last_week = today - timedelta(days=7)
-    # get all post for the last week
-    posts = Post.objects.filter(created_at__gte=last_week)
-    # get categories only once
-    categories = set(posts.values_list('postcategory__category', flat=True))
-    print(categories)
+
 
