@@ -60,6 +60,10 @@ MIDDLEWARE = [
 
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+
 ]
 
 ROOT_URLCONF = 'newsportal.urls'
@@ -176,3 +180,11 @@ CELERY_RESULT_BACKEND = 'redis://192.168.1.15:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+CACHES = {
+    'default': {
+        'TIMEOUT': 60, # добавляем стандартное время ожидания в минуту (по умолчанию это 5 минут — 300 секунд)
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'), # Указываем, куда будем сохранять кэшируемые файлы! Не забываем создать папку cache_files внутри папки с manage.py!
+    }
+}

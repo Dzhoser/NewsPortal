@@ -5,10 +5,13 @@ from django.views.generic import UpdateView, CreateView, DeleteView, TemplateVie
 from .filters import PostFilter  # импортируем фильтр
 from .forms import PostForm
 from django.views import View
+from django.views.decorators.cache import cache_page
 
 
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
+from django.core.cache import cache
+
 
 '''Импортируем миксин, который проверяет аутентификацию и допускает на страницу только зарегистрированных пользователей.
  Его добавляем в наследуемые классы. Кроме миксина можно использовать декоратор login_required'''
@@ -36,6 +39,17 @@ class PostDetail(DetailView):  # редставление, в котором б�
     model = Post
     template_name = 'post.html'
     context_object_name = 'post'
+    pk_url_kwarg = 'id'
+
+    def get_object(self, *args, **kwargs):  # переопределяем метод получения объекта
+        # кэш очень похож на словарь, и метод get действует так же. Он забирает значение по ключу, если его нет, то забирает None.
+        obj = cache.get(f'post-{self.kwargs["id"]}', None)
+
+        # если объекта нет в кэше, то получаем его и записываем в кэш
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'post-{self.kwargs["id"]}', obj)
+        return obj
 
 
 class PostSearch(ListView):
@@ -66,22 +80,22 @@ class PostAdd(CreateView, LoginRequiredMixin, PermissionRequiredMixin):  # Дж�
     # Форма разрешений: <app>.<action>_<model>.
     permission_required = ('news.add_post', 'news.delete_post', 'news.change_post')
 
-    # def post(self, request, *args, **kwargs):
-    #     '''Отправляет письмо подписчикам после создания нового поста'''
-    #     form = PostForm(request.POST)
-    #     post = form.save()
-    #     post_categories = post.category.all()
-    #     list_of_users = []
-    #     for category in post_categories:
-    #         for i in range(len(Category.objects.get(name=category).subscribers.all())):
-    #             list_of_users.append(Category.objects.get(name=category).subscribers.all()[i].email)
-    #     send_mail(
-    #         subject='Новый пост на портале newsportal!',
-    #         message=f'Новая новость в вашей категории!',
-    #         from_email='example@yandex.ru',
-    #         recipient_list=list_of_users,
-    #     )
-    #     return redirect('/news')
+    def post(self, request, *args, **kwargs):
+        '''Отправляет письмо подписчикам после создания нового поста'''
+        form = PostForm(request.POST)
+        post = form.save()
+        post_categories = post.category.all()
+        list_of_users = []
+        for category in post_categories:
+            for i in range(len(Category.objects.get(name=category).subscribers.all())):
+                list_of_users.append(Category.objects.get(name=category).subscribers.all()[i].email)
+        send_mail(
+            subject='Новый пост на портале newsportal!',
+            message=f'Новая новость в вашей категории!',
+            from_email='example@yandex.ru',
+            recipient_list=list_of_users,
+        )
+        return redirect('/news')
 
 class PostDelete(DeleteView, PermissionRequiredMixin, LoginRequiredMixin):  # Джейнерик для удаления объекта
     template_name = 'delete.html'

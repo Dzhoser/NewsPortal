@@ -1,10 +1,17 @@
 <!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+
+
+
 {% extends 'flatpages/default.html' %}
 
+
 <!-- Название у нас будет Product -->
+{% load cache %}
+{% cache 30 title %}
 {% block title %}
 Post
 {% endblock title %}
+{% endcache %}
 
 <!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
 {% block content %}

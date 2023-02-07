@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User  #  Модель User
+from django.core.cache import cache
 # Create your models here.
 
 class Author(models.Model):  # Модель, содержащая объекты всех авторов
@@ -66,6 +67,10 @@ class Post(models.Model):  # Модель, содержащая объекты �
 
     def get_absolute_url(self):  # добавим абсолютный путь, чтобы после создания нас перебрасывало на главную страницу
         return f'/news/{self.id}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)      # сначала вызываем метод родителя, чтобы объект сохранился
+        cache.delete(f'post-{self.id}')    # затем удаляем его из кэша, чтобы сбросить его
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

@@ -1,14 +1,20 @@
 {% extends 'flatpages/default.html' %}
 {% load censor %}  <!-- Подгружаем фильтры -->
 
-
+{% load cache %}
+{% cache 30 title %}
 {% block title %}
 Новости
 {% endblock title %}
+{% endcache %}
 
+
+{% cache 30 header %}
 {% block header %}
 Новости
 {% endblock header %}
+{% endcache %}
+
 
 {% block content %}
 
