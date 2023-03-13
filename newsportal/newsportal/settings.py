@@ -276,7 +276,6 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            # 'level': DEBUG,
             'handlers': [
                 'console_debug',
                 'console_warning',
