@@ -1,0 +1,48 @@
+2023-03-12 21:18:30,576 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\utils\log.py Internal Server Error: /news/1 (<class 'KeyError'>, KeyError('id'), <traceback object at 0x0000014A48EC3A80>)
+Traceback (most recent call last):
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\detail.py", line 108, in get
+    self.object = self.get_object()
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\newsportal\news\views.py", line 46, in get_object
+    obj = cache.get(f'post-{self.kwargs["id"]}', None)
+KeyError: 'id'
+2023-03-12 21:18:30,582 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\servers\basehttp.py "GET /news/1 HTTP/1.1" 500 85992 None
+2023-03-12 21:18:43,684 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\utils\log.py Internal Server Error: /news/14 (<class 'KeyError'>, KeyError('id'), <traceback object at 0x0000014A4872E540>)
+Traceback (most recent call last):
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\detail.py", line 108, in get
+    self.object = self.get_object()
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\newsportal\news\views.py", line 46, in get_object
+    obj = cache.get(f'post-{self.kwargs["id"]}', None)
+KeyError: 'id'
+2023-03-12 21:18:43,692 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\servers\basehttp.py "GET /news/14 HTTP/1.1" 500 86164 None
+2023-03-12 21:19:04,428 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\utils\log.py Internal Server Error: /news/13 (<class 'KeyError'>, KeyError('id'), <traceback object at 0x0000014A48E91C40>)
+Traceback (most recent call last):
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\detail.py", line 108, in get
+    self.object = self.get_object()
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\newsportal\news\views.py", line 46, in get_object
+    obj = cache.get(f'post-{self.kwargs["id"]}', None)
+KeyError: 'id'
+2023-03-12 21:19:04,445 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\servers\basehttp.py "GET /news/13 HTTP/1.1" 500 86310 None
