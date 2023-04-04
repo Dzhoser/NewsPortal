@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Post, Author, Comment, Category, PostCategory
+from modeltranslation.admin import TranslationAdmin # импортируем модель амдинки (вспоминаем модуль про переопределение стандартных админ-инструментов)
 
 #Настройка моделей в админке:
 class PostAdmin(admin.ModelAdmin):
@@ -16,9 +17,21 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'name')
 
 
+class CategoryAdmin(TranslationAdmin):
+    model = Category
+
+
+# add translation area
+class PostAdmin(TranslationAdmin):
+    model = Post
+
+
+
 # Register your models here.
 admin.site.register(Post, PostAdmin)
 admin.site.register(Author)
 admin.site.register(Comment)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(PostCategory)
+
+# add translation area

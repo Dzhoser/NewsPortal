@@ -46,3 +46,96 @@ Traceback (most recent call last):
     obj = cache.get(f'post-{self.kwargs["id"]}', None)
 KeyError: 'id'
 2023-03-12 21:19:04,445 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\servers\basehttp.py "GET /news/13 HTTP/1.1" 500 86310 None
+2023-03-25 09:54:03,075 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\utils\log.py Internal Server Error: / (<class 'django.template.exceptions.TemplateSyntaxError'>, TemplateSyntaxError("Invalid block tag on line 28: 'get_current_timezone'. Did you forget to register or load this tag?"), <traceback object at 0x0000026601232A40>)
+Traceback (most recent call last):
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+KeyError: 'get_current_timezone'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\newsportal\news\views.py", line 177, in get
+    return HttpResponse(render(request, 'index.html', context))
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\backends\django.py", line 34, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 28: 'get_current_timezone'. Did you forget to register or load this tag?
+2023-03-25 09:54:03,092 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\servers\basehttp.py "GET / HTTP/1.1" 500 181756 None
+2023-04-02 20:15:23,917 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\utils\log.py Internal Server Error: /news/14 (<class 'KeyError'>, KeyError('id'), <traceback object at 0x00000278ED95E040>)
+Traceback (most recent call last):
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\detail.py", line 108, in get
+    self.object = self.get_object()
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\newsportal\news\views.py", line 58, in get_object
+    obj = cache.get(f'post-{self.kwargs["id"]}', None)
+KeyError: 'id'
+2023-04-02 20:15:23,945 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\servers\basehttp.py "GET /news/14 HTTP/1.1" 500 83536 None
+2023-04-02 20:16:24,225 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\utils\log.py Internal Server Error: /news/13 (<class 'KeyError'>, KeyError('id'), <traceback object at 0x000001A7B3C7B700>)
+Traceback (most recent call last):
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\detail.py", line 108, in get
+    self.object = self.get_object()
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\newsportal\news\views.py", line 58, in get_object
+    obj = cache.get(f'post-{self.kwargs["id"]}', None)
+KeyError: 'id'
+2023-04-02 20:16:24,337 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\servers\basehttp.py "GET /news/13 HTTP/1.1" 500 83363 None
+2023-04-02 20:21:02,277 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\utils\log.py Internal Server Error: /news/14 (<class 'AttributeError'>, AttributeError('Generic detail view PostDetail must be called with either an object pk or a slug in the URLconf.'), <traceback object at 0x000001A5E26D0280>)
+Traceback (most recent call last):
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\base.py", line 142, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\detail.py", line 108, in get
+    self.object = self.get_object()
+  File "C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\views\generic\detail.py", line 46, in get_object
+    raise AttributeError(
+AttributeError: Generic detail view PostDetail must be called with either an object pk or a slug in the URLconf.
+2023-04-02 20:21:02,283 ERROR C:\projects\skillfactory_true\NewsPortal\NewsPortal\venv\lib\site-packages\django\core\servers\basehttp.py "GET /news/14 HTTP/1.1" 500 84504 None
